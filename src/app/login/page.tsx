@@ -1,3 +1,4 @@
+import LoginButton from "@/components/auth/LoginButton";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Package2Icon } from "lucide-react"
 import Link from "next/link";
@@ -19,10 +20,10 @@ function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-
+          <LoginButton/>
         </CardContent>
         <CardFooter className="flex justify-center">
-            <Link href={'/'} className="text-sm text-slate-500">Back to Home</Link>
+            <Link href={'/'} className="text-sm text-slate-500 hover:text-pink-400">Back to Home</Link>
         </CardFooter>
       </Card>
     </div>
