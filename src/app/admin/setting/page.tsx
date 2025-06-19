@@ -10,13 +10,16 @@ import CategoryManager from "@/components/admin/category-management";
 import {
   getAllCategories,
   getAllUsersCountAction,
+  getTotalAssetsCount,
 } from "@/actions/admin-actions";
 import { user } from "@/lib/db/schema";
+import { getAllUserAsset } from "@/actions/dashboard-action";
 
 async function SettingPage() {
-  const [categories, userCount] = await Promise.all([
+  const [categories, userCount,assetsCount] = await Promise.all([
     getAllCategories(),
     getAllUsersCountAction(),
+    getTotalAssetsCount()
   ]);
   return (
     <div className="container py-10 px-6">
@@ -47,7 +50,7 @@ async function SettingPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="font-bold text-pink-400 text-3xl">1000</p>
+            <p className="font-bold text-pink-400 text-3xl">{assetsCount}</p>
           </CardContent>
         </Card>
       </div>

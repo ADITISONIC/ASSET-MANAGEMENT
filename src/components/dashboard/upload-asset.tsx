@@ -8,6 +8,7 @@ import { Label } from "../ui/label"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { uploadAsset } from "@/actions/dashboard-action"
 
 type Category={
     id:number,
@@ -120,8 +121,25 @@ function UploadAsset({categories}:UploadDialogProperty){
           formData.append("categoryId", formState.categoryId);
           formData.append("fileUrl", cloudinaryResponse.secure_url);
           formData.append("thumbnailUrl", cloudinaryResponse.secure_url);
+          const result = await uploadAsset(formData)
+          if(result.success){
+            setOpen(false)
+            setFormState({
+              title: "",
+              description: "",
+              categoryId: "",
+              file: null,
+            });
+          }
+          else{
+            throw new Error(result.error)
+          }
         } catch (error) {
-            
+            console.log(error)
+        }
+        finally{
+            setIsUploading(false)
+            setUploadProgressStatus(0)
         }
     }
     
@@ -178,6 +196,14 @@ function UploadAsset({categories}:UploadDialogProperty){
                 <Label htmlFor="file">File Upload</Label>
                 <Input onChange={handleFileChange} type="file" id="file" accept="image/*" />
               </div>
+              {
+                isUploading && uploadProgessStatus > 0 && (
+                    <div className="mb-5 w-full bg-stone-100 rounded-full h-2">
+                       <div className="bg-pink-400 h-2 rounded-full" style={{width:`${uploadProgessStatus}%`}}/>
+                       <p className="text-xs text-slate-100 mt-2 text-right">{uploadProgessStatus}% uploaded</p>
+                    </div>
+                )
+              }
               <DialogFooter>
                 <Button
                   type="submit"
@@ -185,6 +211,7 @@ function UploadAsset({categories}:UploadDialogProperty){
                 >
                   Upload Asset
                 </Button>
+
               </DialogFooter>
             </form>
           </DialogContent>
