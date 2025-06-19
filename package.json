@@ -19,6 +19,7 @@
     "@radix-ui/react-switch": "^1.2.5",
     "better-auth": "^1.2.9",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
